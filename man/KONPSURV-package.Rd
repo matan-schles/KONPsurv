@@ -6,7 +6,7 @@
  KONP Tests for Testing the Equality of K Distributions for Right-Censored Data
 }
 \description{
- An implementation of the K-sample omnibus non-proportional hazrds (KONP) tests, which are non-parametric permutation tests, for testing the equality of distributions for right censored data.
+ An implementation of the K-sample omnibus non-proportional hazrds (KONP) tests, which are non-parametric permutation tests, for testing the equality of K distributions for right-censored data.
 }
 \details{
   The package contains one function:

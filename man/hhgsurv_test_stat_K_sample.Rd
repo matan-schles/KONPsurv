@@ -4,8 +4,8 @@
 \alias{hhgsurv_test_stat_K_sample}
 \title{A function to return the test statistic of the KONP K-sample test}
 \usage{
-hhgsurv_test_stat_K_sample(s_group, time_group, n_vec, time, delta, trt, tau_k,
-  tau)
+hhgsurv_test_stat_K_sample(s_group, time_group, n_vec, time, delta, trt,
+  tau_k, tau)
 }
 \arguments{
 \item{s_group}{A list with the survival KM estimates for all sorted unique times in each group, each group is an element in the list}

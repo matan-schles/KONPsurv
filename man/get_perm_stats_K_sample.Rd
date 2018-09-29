@@ -4,8 +4,8 @@
 \alias{get_perm_stats_K_sample}
 \title{A function to calculate the permutation test statistics for the KONP K-sample test}
 \usage{
-get_perm_stats_K_sample(ptrt_mat, imputed_time_matrix, imputed_delta_matrix,
-  n_perm, n_vec)
+get_perm_stats_K_sample(ptrt_mat, imputed_time_matrix,
+  imputed_delta_matrix, n_perm, n_vec)
 }
 \arguments{
 \item{ptrt_mat}{The permuted treatment matrix for all permutations}

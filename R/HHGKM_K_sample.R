@@ -35,7 +35,7 @@ sample_trt_K_sample <- function(trt,imputed_delta_matrix)
 #' \code{chisq_test_stat} - returns the Chi-square test statistic. \cr 
 #' \code{lr_test_stat} - returns the likelihood ratio test statistic.
 #' @examples
-#' ## Generate some data to preform test
+#' ## Generate some data to preform the test
 #' set.seed(1)
 #' n <- 50
 #' time <- rexp(n)

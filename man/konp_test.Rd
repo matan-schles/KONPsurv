@@ -34,7 +34,7 @@ The KONP test is a powerful non-parametric K-sample survival test, for equality 
  and has been shown to offer more power than alternative tests, in non-proportional hazards data.
 }
 \examples{
-## Generate some data to preform test
+## Generate some data to preform the test
 set.seed(1)
 n <- 50
 time <- rexp(n)

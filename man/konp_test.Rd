@@ -22,6 +22,7 @@ Two test statistics and their respective P-values are returned: \cr
 
 \code{pv_chisq} - returns the P-value based on the Chi-square statistic. \cr 
 \code{pv_lr} - returns the P-value based on the likelihood ratio statistic. \cr 
+\code{pv_cauchy} - returns the P-value based on the Cauchy statistic. \cr 
 \code{chisq_test_stat} - returns the Chi-square test statistic. \cr 
 \code{lr_test_stat} - returns the likelihood ratio test statistic.
 }

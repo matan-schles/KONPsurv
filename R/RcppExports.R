@@ -9,7 +9,7 @@
 #' 
 #' @details This is an inner function inside SG package, not for the users.
 binary_search_km_ge <- function(array, pattern) {
-    .Call(`_KONPSURV_binary_search_km_ge`, array, pattern)
+    .Call('_KONPSURV_binary_search_km_ge', PACKAGE = 'KONPSURV', array, pattern)
 }
 
 #' Binary search to find the location of the largest time that is smaller or equal of the pattern
@@ -20,7 +20,7 @@ binary_search_km_ge <- function(array, pattern) {
 #' 
 #' @details This is an inner function inside SG package, not for the users.
 binary_search_km_g <- function(array, pattern) {
-    .Call(`_KONPSURV_binary_search_km_g`, array, pattern)
+    .Call('_KONPSURV_binary_search_km_g', PACKAGE = 'KONPSURV', array, pattern)
 }
 
 #' A function to return the test statistic of the SG test
@@ -37,7 +37,7 @@ binary_search_km_g <- function(array, pattern) {
 #' 
 #' @details This is an inner function inside SG package, not for the users.
 hhgsurv_test_stat <- function(s0, s1, time0, time1, time, delta, trt, tau) {
-    .Call(`_KONPSURV_hhgsurv_test_stat`, s0, s1, time0, time1, time, delta, trt, tau)
+    .Call('_KONPSURV_hhgsurv_test_stat', PACKAGE = 'KONPSURV', s0, s1, time0, time1, time, delta, trt, tau)
 }
 
 #' An implementation of Kaplan Meier calculation in C++
@@ -51,7 +51,7 @@ hhgsurv_test_stat <- function(s0, s1, time0, time1, time, delta, trt, tau) {
 #' 
 #' @details This is an inner function inside SG package, not for the users.
 KM_C <- function(time, delta) {
-    .Call(`_KONPSURV_KM_C`, time, delta)
+    .Call('_KONPSURV_KM_C', PACKAGE = 'KONPSURV', time, delta)
 }
 
 #' A function to calculate the permutation test statistics
@@ -67,7 +67,7 @@ KM_C <- function(time, delta) {
 #' 
 #' @details This is an inner function inside SG package, not for the users.
 get_perm_stats <- function(trt, ptrt_mat, time_original, delta_orginial, imputed_altern_time_vec, imputed_altern_delta_vec, n_perm) {
-    .Call(`_KONPSURV_get_perm_stats`, trt, ptrt_mat, time_original, delta_orginial, imputed_altern_time_vec, imputed_altern_delta_vec, n_perm)
+    .Call('_KONPSURV_get_perm_stats', PACKAGE = 'KONPSURV', trt, ptrt_mat, time_original, delta_orginial, imputed_altern_time_vec, imputed_altern_delta_vec, n_perm)
 }
 
 #' A function to return the test statistic of the KONP K-sample test
@@ -84,7 +84,7 @@ get_perm_stats <- function(trt, ptrt_mat, time_original, delta_orginial, imputed
 #' 
 #' @details This is an inner function inside SG package, not for the users.
 hhgsurv_test_stat_K_sample <- function(s_group, time_group, n_vec, time, delta, trt, tau_k, tau) {
-    .Call(`_KONPSURV_hhgsurv_test_stat_K_sample`, s_group, time_group, n_vec, time, delta, trt, tau_k, tau)
+    .Call('_KONPSURV_hhgsurv_test_stat_K_sample', PACKAGE = 'KONPSURV', s_group, time_group, n_vec, time, delta, trt, tau_k, tau)
 }
 
 #' A function to calculate the permutation test statistics for the KONP K-sample test
@@ -98,6 +98,6 @@ hhgsurv_test_stat_K_sample <- function(s_group, time_group, n_vec, time, delta, 
 #' 
 #' @details This is an inner function inside SG package, not for the users.
 get_perm_stats_K_sample <- function(ptrt_mat, imputed_time_matrix, imputed_delta_matrix, n_perm, n_vec) {
-    .Call(`_KONPSURV_get_perm_stats_K_sample`, ptrt_mat, imputed_time_matrix, imputed_delta_matrix, n_perm, n_vec)
+    .Call('_KONPSURV_get_perm_stats_K_sample', PACKAGE = 'KONPSURV', ptrt_mat, imputed_time_matrix, imputed_delta_matrix, n_perm, n_vec)
 }
 

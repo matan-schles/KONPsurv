@@ -1,3 +1,3 @@
-useDynLib(KONPSURV, .registration=TRUE)
 export(konp_test)
 importFrom(Rcpp, evalCpp)
+useDynLib(KONPSURV)

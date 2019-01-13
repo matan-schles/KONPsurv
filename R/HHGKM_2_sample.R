@@ -31,6 +31,7 @@ sample_trt <- function(trt,delta_orginal,imputed_altern_delta_vec)
 #' 
 #' \code{pv_chisq} - returns the P-value based on the Chi-square statistic. \cr 
 #' \code{pv_lr} - returns the P-value based on the likelihood ratio statistic. \cr 
+#' \code{pv_cauchy} - returns the P-value based on the Cauchy statistic. \cr 
 #' \code{chisq_test_stat} - returns the Chi-square test statistic. \cr 
 #' \code{lr_test_stat} - returns the likelihood ratio test statistic.
 #' 
@@ -228,12 +229,18 @@ konp_2_sample<-function(time,delta,trt,n.perm,n.impu = 1)
     
   }
   
-  
   pv_chisq <- (sum(chisq_test_stat<=chisq_stat_perm) + 1)/(n.impu*n.perm+1)
   pv_lr <- (sum(lr_test_stat<=lr_stat_perm) + 1)/(n.impu*n.perm+1)
   
+  #Calculate Cauchy test statistic:
+  #First calculate logrank P-value
+  fit_lr <- survival::survdiff(survival::Surv(time, delta) ~ trt , rho=0)
+  Pvalue_logrank <- 1 - stats::pchisq(fit_lr$chisq, 1)
+  cau <- mean(c(tan((0.5-pv_chisq)*pi),
+                tan((0.5-pv_lr)*pi), tan((0.5-Pvalue_logrank)*pi)))
+  pv_cauchy <- 0.5-atan(cau)/pi
   
-  return(list(pv_chisq=pv_chisq, pv_lr=pv_lr,
+  return(list(pv_chisq=pv_chisq, pv_lr=pv_lr, pv_cauchy = pv_cauchy,
               chisq_test_stat=chisq_test_stat, lr_test_stat=lr_test_stat))
 }
 
@@ -254,6 +261,7 @@ konp_2_sample<-function(time,delta,trt,n.perm,n.impu = 1)
 #' 
 #' \code{pv_chisq} - returns the P-value based on the Chi-square statistic. \cr 
 #' \code{pv_lr} - returns the P-value based on the likelihood ratio statistic. \cr 
+#' \code{pv_cauchy} - returns the P-value based on the Cauchy statistic. \cr 
 #' \code{chisq_test_stat} - returns the Chi-square test statistic. \cr 
 #' \code{lr_test_stat} - returns the likelihood ratio test statistic.
 #' 
@@ -459,10 +467,18 @@ konp_2_sample_impu_output<-function(time,delta,trt,n.perm,n.impu = 1)
   pv_chisq <- (sum(chisq_test_stat<=chisq_stat_perm) + 1)/(n.impu*n.perm+1)
   pv_lr <- (sum(lr_test_stat<=lr_stat_perm) + 1)/(n.impu*n.perm+1)
   
+  #Calculate Cauchy test statistic:
+  #First calculate logrank P-value
+  fit_lr <- survival::survdiff(survival::Surv(time, delta) ~ trt , rho=0)
+  Pvalue_logrank <- 1 - stats::pchisq(fit_lr$chisq, 1)
+  cau <- mean(c(tan((0.5-pv_chisq)*pi),
+                tan((0.5-pv_lr)*pi), tan((0.5-Pvalue_logrank)*pi)))
+  pv_cauchy <- 0.5-atan(cau)/pi
+  
   tab_usage_perm <- mean(tab_usage_perm_vec)
   
   
-  return(list(pv_chisq=pv_chisq, pv_lr=pv_lr,
+  return(list(pv_chisq=pv_chisq, pv_lr=pv_lr, pv_cauchy=pv_cauchy,
               chisq_test_stat=chisq_test_stat, lr_test_stat=lr_test_stat,
               tab_usage = tab_usage, tab_usage_perm = tab_usage_perm,
               imputed_altern_delta_mat=imputed_altern_delta_mat,

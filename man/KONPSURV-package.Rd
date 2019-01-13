@@ -1,6 +1,6 @@
-\name{KONPSURV-package}
-\alias{KONPSURV-package}
-\alias{KONPSURV}
+\name{KONPsurv-package}
+\alias{KONPsurv-package}
+\alias{KONPsurv}
 \docType{package}
 \title{
  KONP Tests for Testing the Equality of K Distributions for Right-Censored Data

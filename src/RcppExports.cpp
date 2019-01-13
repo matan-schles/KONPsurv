@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // binary_search_km_ge
 int binary_search_km_ge(NumericVector array, double pattern);
-RcppExport SEXP _KONPSURV_binary_search_km_ge(SEXP arraySEXP, SEXP patternSEXP) {
+RcppExport SEXP _KONPsurv_binary_search_km_ge(SEXP arraySEXP, SEXP patternSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -19,7 +19,7 @@ END_RCPP
 }
 // binary_search_km_g
 int binary_search_km_g(NumericVector array, double pattern);
-RcppExport SEXP _KONPSURV_binary_search_km_g(SEXP arraySEXP, SEXP patternSEXP) {
+RcppExport SEXP _KONPsurv_binary_search_km_g(SEXP arraySEXP, SEXP patternSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -31,7 +31,7 @@ END_RCPP
 }
 // hhgsurv_test_stat
 List hhgsurv_test_stat(NumericVector s0, NumericVector s1, NumericVector time0, NumericVector time1, NumericVector time, IntegerVector delta, IntegerVector trt, double tau);
-RcppExport SEXP _KONPSURV_hhgsurv_test_stat(SEXP s0SEXP, SEXP s1SEXP, SEXP time0SEXP, SEXP time1SEXP, SEXP timeSEXP, SEXP deltaSEXP, SEXP trtSEXP, SEXP tauSEXP) {
+RcppExport SEXP _KONPsurv_hhgsurv_test_stat(SEXP s0SEXP, SEXP s1SEXP, SEXP time0SEXP, SEXP time1SEXP, SEXP timeSEXP, SEXP deltaSEXP, SEXP trtSEXP, SEXP tauSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -49,7 +49,7 @@ END_RCPP
 }
 // KM_C
 List KM_C(NumericVector time, IntegerVector delta);
-RcppExport SEXP _KONPSURV_KM_C(SEXP timeSEXP, SEXP deltaSEXP) {
+RcppExport SEXP _KONPsurv_KM_C(SEXP timeSEXP, SEXP deltaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -61,7 +61,7 @@ END_RCPP
 }
 // get_perm_stats
 List get_perm_stats(IntegerVector trt, IntegerMatrix ptrt_mat, NumericVector time_original, IntegerVector delta_orginial, NumericVector imputed_altern_time_vec, IntegerVector imputed_altern_delta_vec, int n_perm);
-RcppExport SEXP _KONPSURV_get_perm_stats(SEXP trtSEXP, SEXP ptrt_matSEXP, SEXP time_originalSEXP, SEXP delta_orginialSEXP, SEXP imputed_altern_time_vecSEXP, SEXP imputed_altern_delta_vecSEXP, SEXP n_permSEXP) {
+RcppExport SEXP _KONPsurv_get_perm_stats(SEXP trtSEXP, SEXP ptrt_matSEXP, SEXP time_originalSEXP, SEXP delta_orginialSEXP, SEXP imputed_altern_time_vecSEXP, SEXP imputed_altern_delta_vecSEXP, SEXP n_permSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -78,7 +78,7 @@ END_RCPP
 }
 // hhgsurv_test_stat_K_sample
 List hhgsurv_test_stat_K_sample(List s_group, List time_group, IntegerVector n_vec, NumericVector time, IntegerVector delta, IntegerVector trt, NumericVector tau_k, double tau);
-RcppExport SEXP _KONPSURV_hhgsurv_test_stat_K_sample(SEXP s_groupSEXP, SEXP time_groupSEXP, SEXP n_vecSEXP, SEXP timeSEXP, SEXP deltaSEXP, SEXP trtSEXP, SEXP tau_kSEXP, SEXP tauSEXP) {
+RcppExport SEXP _KONPsurv_hhgsurv_test_stat_K_sample(SEXP s_groupSEXP, SEXP time_groupSEXP, SEXP n_vecSEXP, SEXP timeSEXP, SEXP deltaSEXP, SEXP trtSEXP, SEXP tau_kSEXP, SEXP tauSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -96,7 +96,7 @@ END_RCPP
 }
 // get_perm_stats_K_sample
 List get_perm_stats_K_sample(IntegerMatrix ptrt_mat, NumericMatrix imputed_time_matrix, IntegerMatrix imputed_delta_matrix, int n_perm, IntegerVector n_vec);
-RcppExport SEXP _KONPSURV_get_perm_stats_K_sample(SEXP ptrt_matSEXP, SEXP imputed_time_matrixSEXP, SEXP imputed_delta_matrixSEXP, SEXP n_permSEXP, SEXP n_vecSEXP) {
+RcppExport SEXP _KONPsurv_get_perm_stats_K_sample(SEXP ptrt_matSEXP, SEXP imputed_time_matrixSEXP, SEXP imputed_delta_matrixSEXP, SEXP n_permSEXP, SEXP n_vecSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -111,17 +111,17 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_KONPSURV_binary_search_km_ge", (DL_FUNC) &_KONPSURV_binary_search_km_ge, 2},
-    {"_KONPSURV_binary_search_km_g", (DL_FUNC) &_KONPSURV_binary_search_km_g, 2},
-    {"_KONPSURV_hhgsurv_test_stat", (DL_FUNC) &_KONPSURV_hhgsurv_test_stat, 8},
-    {"_KONPSURV_KM_C", (DL_FUNC) &_KONPSURV_KM_C, 2},
-    {"_KONPSURV_get_perm_stats", (DL_FUNC) &_KONPSURV_get_perm_stats, 7},
-    {"_KONPSURV_hhgsurv_test_stat_K_sample", (DL_FUNC) &_KONPSURV_hhgsurv_test_stat_K_sample, 8},
-    {"_KONPSURV_get_perm_stats_K_sample", (DL_FUNC) &_KONPSURV_get_perm_stats_K_sample, 5},
+    {"_KONPsurv_binary_search_km_ge", (DL_FUNC) &_KONPsurv_binary_search_km_ge, 2},
+    {"_KONPsurv_binary_search_km_g", (DL_FUNC) &_KONPsurv_binary_search_km_g, 2},
+    {"_KONPsurv_hhgsurv_test_stat", (DL_FUNC) &_KONPsurv_hhgsurv_test_stat, 8},
+    {"_KONPsurv_KM_C", (DL_FUNC) &_KONPsurv_KM_C, 2},
+    {"_KONPsurv_get_perm_stats", (DL_FUNC) &_KONPsurv_get_perm_stats, 7},
+    {"_KONPsurv_hhgsurv_test_stat_K_sample", (DL_FUNC) &_KONPsurv_hhgsurv_test_stat_K_sample, 8},
+    {"_KONPsurv_get_perm_stats_K_sample", (DL_FUNC) &_KONPsurv_get_perm_stats_K_sample, 5},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_KONPSURV(DllInfo *dll) {
+RcppExport void R_init_KONPsurv(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

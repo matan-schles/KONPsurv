@@ -1,16 +1,15 @@
 Package: KONPsurv
 Type: Package
-Title: K-sample omnibus non propotional-hazards test
+Title: KONP Tests for Equality of K Samples based on Right-Censored Data
 Version: 1.0
 Date: 2018-06-30
 Author: Matan Schlesinger [cre, aut],
         Malka Gorfine [aut]
 Maintainer: Matan Schlesinger <matan.schles@gmail.com>
-Description: An implementation of the K-sample omnibus non propotional-hazards (KONP) test, a powerful invariant consistent non-parametric survival test,
-             for for testing equality for distributions based on right censored data. The test that is recommended for non proportional hazard data. 
+Description: The KONP tests are powerful non-parametric tests for comparing K (>=2) hazard functions based on right-censored data. These tests are consistent against any differences between the hazard functions of the groups. The KONP tests are often more powerful than other existing tests, especially under non-proportional hazard functions.
 Authors@R: c(
             person("Matan", "Schlesinger", email = "matan.schles@gmail.com", role = c("cre","aut")),
-            person("Malka", "Gorfine", email = "gorfinem@post.tau.ac.il", role = "aut"))
+            person("Malka", "Gorfine", email = "gorfinem@tauex.tau.ac.il", role = "aut"))
 License: GPL (>= 2)
 Imports: survival,Rcpp (>= 0.12.16)
 LinkingTo: Rcpp

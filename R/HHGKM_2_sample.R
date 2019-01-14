@@ -1,53 +1,54 @@
 #' Create permutation for group vector
 #' 
-#' @param trt A binary vector indicating group.
-#' @param delta_orginal A binary status vector for the original data, 0 for censored observations and 1 for events.
-#' @param imputed_altern_delta_vec A binary imputed status vector for observations that will change group in the permuted data.
-#' @return A permuted vector of trt such that there are at least two events in each group .
+#' @param group A binary vector indicating group.
+#' @param status_orginal A binary status vector for the original data, 0 for censored observations and 1 for events.
+#' @param imputed_altern_status_vec A binary imputed status vector for observations that will change group in the permuted data.
+#' @return A permuted vector of group such that there are at least two events in each group .
 #' 
 #' @details This is an inner function inside KONPSURV package, not for the users.
-sample_trt <- function(trt,delta_orginal,imputed_altern_delta_vec)
+sample_group <- function(group,status_orginal,imputed_altern_status_vec)
 {
-  ptrt <- sample(trt)
-  delta <- ifelse(ptrt==trt,delta_orginal,imputed_altern_delta_vec)
-  while(sum(delta[ptrt==0])<2 | sum(delta[ptrt==1])<2) #making sure we have at least 2 events in each group
+  p_group <- sample(group)
+  status <- ifelse(p_group==group,status_orginal,imputed_altern_status_vec)
+  while(sum(status[p_group==0])<2 | sum(status[p_group==1])<2) #making sure we have at least 2 events in each group
   {
-    ptrt<-sample(trt)
-    delta <- ifelse(ptrt==trt,delta_orginal,imputed_altern_delta_vec)
+    p_group<-sample(group)
+    status <- ifelse(p_group==group,status_orginal,imputed_altern_status_vec)
   }
-  return(ptrt)
+  return(p_group)
 }
 
 
 #' KONP Test for Equality of Two Distributions for Right Censored Data
 #' 
-#' @param time The follow up time.
-#' @param delta A binary status vector, where 0 stands for censored observations and 1 stands for events.
-#' @param trt Group vector, must contain only two unique values.
-#' @param n.perm The number of permutations.
-#' @param n.impu The number of imputations, for each imputation n.perm permutations will be executed.
+#' @param time A vector of the observed follow-up times.
+#' @param status A vector of event indicators, 0=right censored, 1= event at \code{time}.
+#' @param group A vector denoting the group labels, must contain at least two different values.
+#' @param n_perm The number of permutations.
+#' @param n_impu The number of imputations, for each imputation n_perm permutations will be executed.
 #' 
-#' @return Two statistics and their appropriate P-values are returned: \cr 
+#' @return Three test statistics and their respective P-values are returned: \cr 
 #' 
-#' \code{pv_chisq} - returns the P-value based on the Chi-square statistic. \cr 
-#' \code{pv_lr} - returns the P-value based on the likelihood ratio statistic. \cr 
-#' \code{pv_cauchy} - returns the P-value based on the Cauchy statistic. \cr 
-#' \code{chisq_test_stat} - returns the Chi-square test statistic. \cr 
-#' \code{lr_test_stat} - returns the likelihood ratio test statistic.
-#' 
+#' \code{pv_chisq} - returns the P-value based on the KONP test chi-square statistic. \cr 
+#' \code{pv_lr} - returns the P-value based on the KONP test likelihood ratio statistic. \cr 
+#' \code{pv_cauchy} - returns the p-value based on the KONP-based Cauchy-combination test statistic. \cr 
+#' \code{chisq_test_stat} - returns the KONP test chi-squared test statistic. \cr 
+#' \code{lr_test_stat} - returns the KONP test likelihood-ratio test statistic. \cr
+#' \code{cauchy_test_stat} - - returns the KONP-based Cauchy-combination test statistic.
+
 #' @details This is an inner function inside KONPSURV package, not for the users.
 #' The user should run the K-sample test and if K=2 this function will run.
 #'  
-konp_2_sample<-function(time,delta,trt,n.perm,n.impu = 1)
+konp_2_sample<-function(time,status,group,n_perm,n_impu = 1)
 {
   
   #Input testing 
-  if (all(unique(delta)!= c(0,1)) & all(unique(delta)!= c(1,0)) & all(unique(delta)!= 1) & all(unique(delta)!= 0))
+  if (all(unique(status)!= c(0,1)) & all(unique(status)!= c(1,0)) & all(unique(status)!= 1) & all(unique(status)!= 0))
   {
-    stop ("ERROR - delta vecotr must contain 0 or 1 only\n")
+    stop ("ERROR - status vecotr must contain 0 or 1 only\n")
   }
   
-  if (length(unique(trt)) != 2)
+  if (length(unique(group)) != 2)
   {
     stop ("ERROR - there should be exactly 2 treatment groups\n")
   }
@@ -57,34 +58,34 @@ konp_2_sample<-function(time,delta,trt,n.perm,n.impu = 1)
     stop ("ERROR - time class sould be numeric or integer\n")
   }
   
-  if (length(time) != length(trt) | length(time) != length(delta))
+  if (length(time) != length(group) | length(time) != length(status))
   {
-    stop ("ERROR - Vectors time, trt and delta must be in the same length\n")
+    stop ("ERROR - Vectors time, group and status must be in the same length\n")
   }
   
-  if (sum(is.na(time))+ sum(is.na(delta)) +sum(is.na(trt))>0)
+  if (sum(is.na(time))+ sum(is.na(status)) +sum(is.na(group))>0)
   {
-    stop ("ERROR - time or delta or trt has NA's in the vector\n")
+    stop ("ERROR - time or status or group has NA's in the vector\n")
   }
   
-  if (n.perm%%1 != 0 | n.perm<1)
+  if (n_perm%%1 != 0 | n_perm<1)
   {
-    stop ("ERROR - n.perm must be a natural number\n")
+    stop ("ERROR - n_perm must be a natural number\n")
   }
   
-  if (n.impu%%1 != 0 | n.impu<1)
+  if (n_impu%%1 != 0 | n_impu<1)
   {
-    stop ("ERROR - n.impu must be a natural number\n")
+    stop ("ERROR - n_impu must be a natural number\n")
   }
   
-  #Making the trt vector be equal to 0 and 1
-  trt_ex <- rep(NA,length(trt))
-  trt_unq <- unique(trt)
-  trt_ex[trt==trt_unq[1]] <- 0
-  trt_ex[trt==trt_unq[2]] <- 1
-  trt <- trt_ex
+  #Making the group vector be equal to 0 and 1
+  group_ex <- rep(NA,length(group))
+  group_unq <- unique(group)
+  group_ex[group==group_unq[1]] <- 0
+  group_ex[group==group_unq[2]] <- 1
+  group <- group_ex
   
-  if (sum(delta[trt==0])<2 | sum(delta[trt==1])<2)
+  if (sum(status[group==0])<2 | sum(status[group==1])<2)
   {
     stop ("ERROR - Data must have at least two events in each groups in order to preform test\n")
   }
@@ -98,21 +99,21 @@ konp_2_sample<-function(time,delta,trt,n.perm,n.impu = 1)
   
   n<-length(time)
   
-  fit <- survival::survfit(survival::Surv(time[trt==0], delta[trt==0]) ~ 1)
+  fit <- survival::survfit(survival::Surv(time[group==0], status[group==0]) ~ 1)
   s0 <- c(1,fit$surv)
   time0 <- c(0,fit$time)
   
-  fit <- survival::survfit(survival::Surv(time[trt==1], delta[trt==1]) ~ 1)
+  fit <- survival::survfit(survival::Surv(time[group==1], status[group==1]) ~ 1)
   s1 <- c(1,fit$surv)
   time1 <- c(0,fit$time)
   
   M <- Inf # represents a really large number
   
-  max_ev_0 <- max(time[trt==0 & delta==1])  #last event time in group 0
-  max_ev_1 <- max(time[trt==1 &delta==1])  
+  max_ev_0 <- max(time[group==0 & status==1])  #last event time in group 0
+  max_ev_1 <- max(time[group==1 &status==1])  
   
-  max_obs_0 <- max(time[trt==0])  #last event\censor time in group 0
-  max_obs_1 <- max(time[trt==1])  
+  max_obs_0 <- max(time[group==0])  #last event\censor time in group 0
+  max_obs_1 <- max(time[group==1])  
   
   max_0 <- ifelse(max_ev_0==max_obs_0,M,max_ev_0) #last time to estimate km in group 0
   max_1 <- ifelse(max_ev_1==max_obs_1,M,max_ev_1) #last time to estimate km in group 1
@@ -120,8 +121,8 @@ konp_2_sample<-function(time,delta,trt,n.perm,n.impu = 1)
   
   tau <- min(max_0,max_1) # the last time in which we can estimate km in both groups
   
-  test_stat_list <- hhgsurv_test_stat(s0 = s0,s1 = s1,time0 = time0,time1 = time1,time = time,delta = delta,
-                            trt = trt,tau = tau)
+  test_stat_list <- hhgsurv_test_stat(s0 = s0,s1 = s1,time0 = time0,time1 = time1,time = time,delta = status,
+                            trt = group,tau = tau)
   
   chisq_test_stat <- test_stat_list$chisq_stat
   
@@ -129,7 +130,7 @@ konp_2_sample<-function(time,delta,trt,n.perm,n.impu = 1)
   
   
   #prepering for time only imputation
-  fit <- survival::survfit(survival::Surv(time, delta) ~ 1)
+  fit <- survival::survfit(survival::Surv(time, status) ~ 1)
   prob.t <- -diff(c(1,fit$surv)) 
   values.t <- fit$time
   if(sum(prob.t)<1)
@@ -141,8 +142,8 @@ konp_2_sample<-function(time,delta,trt,n.perm,n.impu = 1)
   
   #prepearing for imputation for censoring (and some of the time)
   
-  cen <- 1 - delta
-  fit <- survival::survfit(survival::Surv(time[trt==1], cen[trt==1]) ~ 1)
+  cen <- 1 - status
+  fit <- survival::survfit(survival::Surv(time[group==1], cen[group==1]) ~ 1)
   prob.c1 <- -diff(c(1,fit$surv)) # probabilities for treatment group censorship
   time1 <- fit$time
   if (sum(prob.c1)==0) #this claim will be correct if and only if there are no censorship in the group
@@ -157,7 +158,7 @@ konp_2_sample<-function(time,delta,trt,n.perm,n.impu = 1)
       time1 <- c(time1,max(time1))
     }
   }
-  fit <- survival::survfit(survival::Surv(time[trt==0], cen[trt==0]) ~ 1)
+  fit <- survival::survfit(survival::Surv(time[group==0], cen[group==0]) ~ 1)
   prob.c0 <- -diff(c(1,fit$surv)) # probabilities for control group censorship
   time0 <-fit$time
   if (sum(prob.c0)==0) #this claim will be correct if and only if there are no censorship in the group
@@ -173,34 +174,34 @@ konp_2_sample<-function(time,delta,trt,n.perm,n.impu = 1)
     }
   }
   
-  imputed_altern_time_mat<-matrix(data = NA,ncol = n.impu,nrow = n,byrow = F) #a time mat for each observation if the observation had changed a group
-  imputed_altern_delta_mat<-matrix(data = NA,ncol = n.impu,nrow = n,byrow = F) #a delta mat for each observation if the observation had changed a group
+  imputed_altern_time_mat<-matrix(data = NA,ncol = n_impu,nrow = n,byrow = F) #a time mat for each observation if the observation had changed a group
+  imputed_altern_status_mat<-matrix(data = NA,ncol = n_impu,nrow = n,byrow = F) #a status mat for each observation if the observation had changed a group
   
   
-  for (subj in 1:n) #running for trt==0
+  for (subj in 1:n) #running for group==0
   {
-    if (trt[subj]==0)
+    if (group[subj]==0)
     {
-      c <- sample(time1,n.impu,prob=prob.c1,replace = T) + stats::rnorm(n = n.impu,sd = 10^-4)
-      t <- rep(time[subj],n.impu)
+      c <- sample(time1,n_impu,prob=prob.c1,replace = T) + stats::rnorm(n = n_impu,sd = 10^-4)
+      t <- rep(time[subj],n_impu)
       prob <- prob.t[values.t > time[subj]]
       values <- values.t[values.t > time[subj]]
-      if ((length(prob)>0) & (sum(prob)>0) & delta[subj]==0)
-      { t <- sample(c(values,values), n.impu, prob = c(prob,prob),replace = T) + stats::rnorm(n = n.impu,sd = 10^-4)
+      if ((length(prob)>0) & (sum(prob)>0) & status[subj]==0)
+      { t <- sample(c(values,values), n_impu, prob = c(prob,prob),replace = T) + stats::rnorm(n = n_impu,sd = 10^-4)
       }
-      imputed_altern_delta_mat[subj,] <- ifelse(t<=c,1,0)
+      imputed_altern_status_mat[subj,] <- ifelse(t<=c,1,0)
       imputed_altern_time_mat[subj,] <- pmax(ifelse(t<=c,t,c),10^-10) #pmax is for not getting negative values
     }
-    if (trt[subj]==1)
+    if (group[subj]==1)
     {
-      c <- sample(time0,n.impu,prob=prob.c0,replace = T) +stats::rnorm(n = n.impu,sd = 10^-4)
-      t <-  rep(time[subj],n.impu)
+      c <- sample(time0,n_impu,prob=prob.c0,replace = T) +stats::rnorm(n = n_impu,sd = 10^-4)
+      t <-  rep(time[subj],n_impu)
       prob <- prob.t[values.t > time[subj]]
       values <- values.t[values.t > time[subj]]
-      if ((length(prob)>0) & (sum(prob)>0) & delta[subj]==0)
-      { t <-  sample(c(values,values), n.impu, prob = c(prob,prob),replace = T) + stats::rnorm(n = n.impu,sd = 10^-4)
+      if ((length(prob)>0) & (sum(prob)>0) & status[subj]==0)
+      { t <-  sample(c(values,values), n_impu, prob = c(prob,prob),replace = T) + stats::rnorm(n = n_impu,sd = 10^-4)
       }
-      imputed_altern_delta_mat[subj,] <- ifelse(t<=c,1,0)
+      imputed_altern_status_mat[subj,] <- ifelse(t<=c,1,0)
       imputed_altern_time_mat[subj,] <- pmax(ifelse(t<=c,t,c),10^-10) #pmax is for not getting negative values
     }
   }
@@ -209,19 +210,19 @@ konp_2_sample<-function(time,delta,trt,n.perm,n.impu = 1)
   chisq_stat_perm <- c()
   lr_stat_perm <- c()
   
-  pv_chisq_vec <- rep(NA,n.impu)
-  pv_lr_vec <- rep(NA,n.impu)
+  pv_chisq_vec <- rep(NA,n_impu)
+  pv_lr_vec <- rep(NA,n_impu)
 
   
-  for (imp in 1:n.impu)
+  for (imp in 1:n_impu)
   {
-    ptrt_mat <- replicate(n.perm,sample_trt(trt,delta,imputed_altern_delta_mat[,imp])) #creating the permutation for n.perm permutations in a matrix
+    p_group_mat <- replicate(n_perm,sample_group(group,status,imputed_altern_status_mat[,imp])) #creating the permutation for n_perm permutations in a matrix
     
-    perm <- get_perm_stats(trt,ptrt_mat,time,delta,imputed_altern_time_mat[,imp],
-                          imputed_altern_delta_mat[,imp],n_perm = n.perm)
+    perm <- get_perm_stats(group,p_group_mat,time,status,imputed_altern_time_mat[,imp],
+                          imputed_altern_status_mat[,imp],n_perm = n_perm)
     
-    pv_chisq_vec[imp] <- (sum(chisq_test_stat<=perm$chisq_stat)+1)/(n.perm +1)
-    pv_lr_vec[imp] <- (sum(lr_test_stat<=perm$lr_stat)+1)/(n.perm +1)
+    pv_chisq_vec[imp] <- (sum(chisq_test_stat<=perm$chisq_stat)+1)/(n_perm +1)
+    pv_lr_vec[imp] <- (sum(lr_test_stat<=perm$lr_stat)+1)/(n_perm +1)
     
 
     chisq_stat_perm <- c(chisq_stat_perm,perm$chisq_stat)
@@ -229,19 +230,20 @@ konp_2_sample<-function(time,delta,trt,n.perm,n.impu = 1)
     
   }
   
-  pv_chisq <- (sum(chisq_test_stat<=chisq_stat_perm) + 1)/(n.impu*n.perm+1)
-  pv_lr <- (sum(lr_test_stat<=lr_stat_perm) + 1)/(n.impu*n.perm+1)
+  pv_chisq <- (sum(chisq_test_stat<=chisq_stat_perm) + 1)/(n_impu*n_perm+1)
+  pv_lr <- (sum(lr_test_stat<=lr_stat_perm) + 1)/(n_impu*n_perm+1)
   
   #Calculate Cauchy test statistic:
   #First calculate logrank P-value
-  fit_lr <- survival::survdiff(survival::Surv(time, delta) ~ trt , rho=0)
+  fit_lr <- survival::survdiff(survival::Surv(time, status) ~ group , rho=0)
   Pvalue_logrank <- 1 - stats::pchisq(fit_lr$chisq, 1)
   cau <- mean(c(tan((0.5-pv_chisq)*pi),
                 tan((0.5-pv_lr)*pi), tan((0.5-Pvalue_logrank)*pi)))
   pv_cauchy <- 0.5-atan(cau)/pi
   
   return(list(pv_chisq=pv_chisq, pv_lr=pv_lr, pv_cauchy = pv_cauchy,
-              chisq_test_stat=chisq_test_stat, lr_test_stat=lr_test_stat))
+              chisq_test_stat=chisq_test_stat, lr_test_stat=lr_test_stat,
+              cauchy_test_stat = cau))
 }
 
 
@@ -251,31 +253,31 @@ konp_2_sample<-function(time,delta,trt,n.perm,n.impu = 1)
 
 #' KONP Test for Equality of Two Distributions for Right Censored Data
 #' 
-#' @param time The follow up time.
-#' @param delta A binary status vector, where 0 stands for censored observations and 1 stands for events.
-#' @param trt Group vector, must contain only two unique values.
-#' @param n.perm The number of permutations.
-#' @param n.impu The number of imputations, for each imputation n.perm permutations will be executed.
+#' @param time A vector of the observed follow-up times.
+#' @param status A vector of event indicators, 0=right censored, 1= event at \code{time}.
+#' @param group A vector denoting the group labels, must contain at least two different values.
+#' @param n_perm The number of permutations.
+#' @param n_impu The number of imputations, for each imputation n_perm permutations will be executed.
 #' 
-#' @return Two statistics and their appropriate P-values are returned: \cr 
+#' @return Three test statistics and their respective P-values are returned: \cr 
 #' 
-#' \code{pv_chisq} - returns the P-value based on the Chi-square statistic. \cr 
-#' \code{pv_lr} - returns the P-value based on the likelihood ratio statistic. \cr 
-#' \code{pv_cauchy} - returns the P-value based on the Cauchy statistic. \cr 
-#' \code{chisq_test_stat} - returns the Chi-square test statistic. \cr 
-#' \code{lr_test_stat} - returns the likelihood ratio test statistic.
-#' 
+#' \code{pv_chisq} - returns the P-value based on the KONP test chi-square statistic. \cr 
+#' \code{pv_lr} - returns the P-value based on the KONP test likelihood ratio statistic. \cr 
+#' \code{pv_cauchy} - returns the p-value based on the KONP-based Cauchy-combination test statistic. \cr 
+#' \code{chisq_test_stat} - returns the KONP test chi-squared test statistic. \cr 
+#' \code{lr_test_stat} - returns the KONP test likelihood-ratio test statistic. \cr
+#' \code{cauchy_test_stat} - - returns the KONP-based Cauchy-combination test statistic.
 #' @details This is inner funtion inside KONP package made only for running simulation and not for users
-konp_2_sample_impu_output<-function(time,delta,trt,n.perm,n.impu = 1)
+konp_2_sample_impu_output<-function(time,status,group,n_perm,n_impu = 1)
 {
   
   #Input testing 
-  if (all(unique(delta)!= c(0,1)) & all(unique(delta)!= c(1,0)) & all(unique(delta)!= 1) & all(unique(delta)!= 0))
+  if (all(unique(status)!= c(0,1)) & all(unique(status)!= c(1,0)) & all(unique(status)!= 1) & all(unique(status)!= 0))
   {
-    stop ("ERROR - delta vecotr must contain 0 or 1 only\n")
+    stop ("ERROR - status vecotr must contain 0 or 1 only\n")
   }
   
-  if (length(unique(trt)) != 2)
+  if (length(unique(group)) != 2)
   {
     stop ("ERROR - there should be exactly 2 treatment groups\n")
   }
@@ -285,34 +287,34 @@ konp_2_sample_impu_output<-function(time,delta,trt,n.perm,n.impu = 1)
     stop ("ERROR - time class sould be numeric or integer\n")
   }
   
-  if (length(time) != length(trt) | length(time) != length(delta))
+  if (length(time) != length(group) | length(time) != length(status))
   {
-    stop ("ERROR - Vectors time, trt and delta must be in the same length\n")
+    stop ("ERROR - Vectors time, group and status must be in the same length\n")
   }
   
-  if (sum(is.na(time))+ sum(is.na(delta)) +sum(is.na(trt))>0)
+  if (sum(is.na(time))+ sum(is.na(status)) +sum(is.na(group))>0)
   {
-    stop ("ERROR - time or delta or trt has NA's in the vector\n")
+    stop ("ERROR - time or status or group has NA's in the vector\n")
   }
   
-  if (n.perm%%1 != 0 | n.perm<1)
+  if (n_perm%%1 != 0 | n_perm<1)
   {
-    stop ("ERROR - n.perm must be a natural number\n")
+    stop ("ERROR - n_perm must be a natural number\n")
   }
   
-  if (n.impu%%1 != 0 | n.impu<1)
+  if (n_impu%%1 != 0 | n_impu<1)
   {
-    stop ("ERROR - n.impu must be a natural number\n")
+    stop ("ERROR - n_impu must be a natural number\n")
   }
   
-  #Making the trt vector be equal to 0 and 1
-  trt_ex <- rep(NA,length(trt))
-  trt_unq <- unique(trt)
-  trt_ex[trt==trt_unq[1]] <- 0
-  trt_ex[trt==trt_unq[2]] <- 1
-  trt <- trt_ex
+  #Making the group vector be equal to 0 and 1
+  group_ex <- rep(NA,length(group))
+  group_unq <- unique(group)
+  group_ex[group==group_unq[1]] <- 0
+  group_ex[group==group_unq[2]] <- 1
+  group <- group_ex
   
-  if (sum(delta[trt==0])<2 | sum(delta[trt==1])<2)
+  if (sum(status[group==0])<2 | sum(status[group==1])<2)
   {
     stop ("ERROR - Data must have at least two events in each groups in order to preform test\n")
   }
@@ -326,21 +328,21 @@ konp_2_sample_impu_output<-function(time,delta,trt,n.perm,n.impu = 1)
   
   n<-length(time)
   
-  fit <- survival::survfit(survival::Surv(time[trt==0], delta[trt==0]) ~ 1)
+  fit <- survival::survfit(survival::Surv(time[group==0], status[group==0]) ~ 1)
   s0 <- c(1,fit$surv)
   time0 <- c(0,fit$time)
   
-  fit <- survival::survfit(survival::Surv(time[trt==1], delta[trt==1]) ~ 1)
+  fit <- survival::survfit(survival::Surv(time[group==1], status[group==1]) ~ 1)
   s1 <- c(1,fit$surv)
   time1 <- c(0,fit$time)
   
   M <- Inf # represents a really large number
   
-  max_ev_0 <- max(time[trt==0 & delta==1])  #last event time in group 0
-  max_ev_1 <- max(time[trt==1 &delta==1])  
+  max_ev_0 <- max(time[group==0 & status==1])  #last event time in group 0
+  max_ev_1 <- max(time[group==1 &status==1])  
   
-  max_obs_0 <- max(time[trt==0])  #last event\censor time in group 0
-  max_obs_1 <- max(time[trt==1])  
+  max_obs_0 <- max(time[group==0])  #last event\censor time in group 0
+  max_obs_1 <- max(time[group==1])  
   
   max_0 <- ifelse(max_ev_0==max_obs_0,M,max_ev_0) #last time to estimate km in group 0
   max_1 <- ifelse(max_ev_1==max_obs_1,M,max_ev_1) #last time to estimate km in group 1
@@ -348,8 +350,8 @@ konp_2_sample_impu_output<-function(time,delta,trt,n.perm,n.impu = 1)
   
   tau <- min(max_0,max_1) # the last time in which we can estimate km in both groups
   
-  test_stat_list <- hhgsurv_test_stat(s0 = s0,s1 = s1,time0 = time0,time1 = time1,time = time,delta = delta,
-                                      trt = trt,tau = tau)
+  test_stat_list <- hhgsurv_test_stat(s0 = s0,s1 = s1,time0 = time0,time1 = time1,time = time,delta = status,
+                                      trt = group,tau = tau)
   
   chisq_test_stat <- test_stat_list$chisq_stat
   
@@ -359,7 +361,7 @@ konp_2_sample_impu_output<-function(time,delta,trt,n.perm,n.impu = 1)
   
   
   #prepering for time only imputation
-  fit <- survival::survfit(survival::Surv(time, delta) ~ 1)
+  fit <- survival::survfit(survival::Surv(time, status) ~ 1)
   prob.t <- -diff(c(1,fit$surv)) 
   values.t <- fit$time
   if(sum(prob.t)<1)
@@ -371,8 +373,8 @@ konp_2_sample_impu_output<-function(time,delta,trt,n.perm,n.impu = 1)
   
   #prepearing for imputation for censoring (and some of the time)
   
-  cen <- 1 - delta
-  fit <- survival::survfit(survival::Surv(time[trt==1], cen[trt==1]) ~ 1)
+  cen <- 1 - status
+  fit <- survival::survfit(survival::Surv(time[group==1], cen[group==1]) ~ 1)
   prob.c1 <- -diff(c(1,fit$surv)) # probabilities for treatment group censorship
   time1 <- fit$time
   if (sum(prob.c1)==0) #this claim will be correct if and only if there are no censorship in the group
@@ -387,7 +389,7 @@ konp_2_sample_impu_output<-function(time,delta,trt,n.perm,n.impu = 1)
       time1 <- c(time1,max(time1))
     }
   }
-  fit <- survival::survfit(survival::Surv(time[trt==0], cen[trt==0]) ~ 1)
+  fit <- survival::survfit(survival::Surv(time[group==0], cen[group==0]) ~ 1)
   prob.c0 <- -diff(c(1,fit$surv)) # probabilities for control group censorship
   time0 <-fit$time
   if (sum(prob.c0)==0) #this claim will be correct if and only if there are no censorship in the group
@@ -405,34 +407,34 @@ konp_2_sample_impu_output<-function(time,delta,trt,n.perm,n.impu = 1)
   
   
   
-  imputed_altern_time_mat<-matrix(data = NA,ncol = n.impu,nrow = n,byrow = F) #a time mat for each observation if the observation had changed a group
-  imputed_altern_delta_mat<-matrix(data = NA,ncol = n.impu,nrow = n,byrow = F) #a delta mat for each observation if the observation had changed a group
+  imputed_altern_time_mat<-matrix(data = NA,ncol = n_impu,nrow = n,byrow = F) #a time mat for each observation if the observation had changed a group
+  imputed_altern_status_mat<-matrix(data = NA,ncol = n_impu,nrow = n,byrow = F) #a status mat for each observation if the observation had changed a group
   
   
-  for (subj in 1:n) #running for trt==0
+  for (subj in 1:n) #running for group==0
   {
-    if (trt[subj]==0)
+    if (group[subj]==0)
     {
-      c <- sample(time1,n.impu,prob=prob.c1,replace = T) + stats::rnorm(n = n.impu,sd = 10^-4)
-      t <- rep(time[subj],n.impu)
+      c <- sample(time1,n_impu,prob=prob.c1,replace = T) + stats::rnorm(n = n_impu,sd = 10^-4)
+      t <- rep(time[subj],n_impu)
       prob <- prob.t[values.t > time[subj]]
       values <- values.t[values.t > time[subj]]
-      if ((length(prob)>0) & (sum(prob)>0) & delta[subj]==0)
-      { t <- sample(c(values,values), n.impu, prob = c(prob,prob),replace = T) + stats::rnorm(n = n.impu,sd = 10^-4)
+      if ((length(prob)>0) & (sum(prob)>0) & status[subj]==0)
+      { t <- sample(c(values,values), n_impu, prob = c(prob,prob),replace = T) + stats::rnorm(n = n_impu,sd = 10^-4)
       }
-      imputed_altern_delta_mat[subj,] <- ifelse(t<=c,1,0)
+      imputed_altern_status_mat[subj,] <- ifelse(t<=c,1,0)
       imputed_altern_time_mat[subj,] <- pmax(ifelse(t<=c,t,c),10^-10) #pmax is for not getting negative values
     }
-    if (trt[subj]==1)
+    if (group[subj]==1)
     {
-      c <- sample(time0,n.impu,prob=prob.c0,replace = T) +stats::rnorm(n = n.impu,sd = 10^-4)
-      t <-  rep(time[subj],n.impu)
+      c <- sample(time0,n_impu,prob=prob.c0,replace = T) +stats::rnorm(n = n_impu,sd = 10^-4)
+      t <-  rep(time[subj],n_impu)
       prob <- prob.t[values.t > time[subj]]
       values <- values.t[values.t > time[subj]]
-      if ((length(prob)>0) & (sum(prob)>0) & delta[subj]==0)
-      { t <-  sample(c(values,values), n.impu, prob = c(prob,prob),replace = T) + stats::rnorm(n = n.impu,sd = 10^-4)
+      if ((length(prob)>0) & (sum(prob)>0) & status[subj]==0)
+      { t <-  sample(c(values,values), n_impu, prob = c(prob,prob),replace = T) + stats::rnorm(n = n_impu,sd = 10^-4)
       }
-      imputed_altern_delta_mat[subj,] <- ifelse(t<=c,1,0)
+      imputed_altern_status_mat[subj,] <- ifelse(t<=c,1,0)
       imputed_altern_time_mat[subj,] <- pmax(ifelse(t<=c,t,c),10^-10) #pmax is for not getting negative values
     }
   }
@@ -440,21 +442,21 @@ konp_2_sample_impu_output<-function(time,delta,trt,n.perm,n.impu = 1)
   chisq_stat_perm <- c()
   lr_stat_perm <- c()
   
-  pv_chisq_vec <- rep(NA,n.impu)
-  pv_lr_vec <- rep(NA,n.impu)
+  pv_chisq_vec <- rep(NA,n_impu)
+  pv_lr_vec <- rep(NA,n_impu)
   
-  tab_usage_perm_vec <- rep(NA,n.impu)
+  tab_usage_perm_vec <- rep(NA,n_impu)
   
   
-  for (imp in 1:n.impu)
+  for (imp in 1:n_impu)
   {
-    ptrt_mat <- replicate(n.perm,sample_trt(trt,delta,imputed_altern_delta_mat[,imp])) #creating the permutation for n.perm permutations in a matrix
+    p_group_mat <- replicate(n_perm,sample_group(group,status,imputed_altern_status_mat[,imp])) #creating the permutation for n_perm permutations in a matrix
     
-    perm <- get_perm_stats(trt,ptrt_mat,time,delta,imputed_altern_time_mat[,imp],
-                           imputed_altern_delta_mat[,imp],n_perm = n.perm)
+    perm <- get_perm_stats(group,p_group_mat,time,status,imputed_altern_time_mat[,imp],
+                           imputed_altern_status_mat[,imp],n_perm = n_perm)
     
-    pv_chisq_vec[imp] <- (sum(chisq_test_stat<=perm$chisq_stat)+1)/(n.perm +1)
-    pv_lr_vec[imp] <- (sum(lr_test_stat<=perm$lr_stat)+1)/(n.perm +1)
+    pv_chisq_vec[imp] <- (sum(chisq_test_stat<=perm$chisq_stat)+1)/(n_perm +1)
+    pv_lr_vec[imp] <- (sum(lr_test_stat<=perm$lr_stat)+1)/(n_perm +1)
     
     tab_usage_perm_vec[imp] <- mean(perm$tab_usage_perm)
     
@@ -464,12 +466,12 @@ konp_2_sample_impu_output<-function(time,delta,trt,n.perm,n.impu = 1)
   }
   
   
-  pv_chisq <- (sum(chisq_test_stat<=chisq_stat_perm) + 1)/(n.impu*n.perm+1)
-  pv_lr <- (sum(lr_test_stat<=lr_stat_perm) + 1)/(n.impu*n.perm+1)
+  pv_chisq <- (sum(chisq_test_stat<=chisq_stat_perm) + 1)/(n_impu*n_perm+1)
+  pv_lr <- (sum(lr_test_stat<=lr_stat_perm) + 1)/(n_impu*n_perm+1)
   
   #Calculate Cauchy test statistic:
   #First calculate logrank P-value
-  fit_lr <- survival::survdiff(survival::Surv(time, delta) ~ trt , rho=0)
+  fit_lr <- survival::survdiff(survival::Surv(time, status) ~ group , rho=0)
   Pvalue_logrank <- 1 - stats::pchisq(fit_lr$chisq, 1)
   cau <- mean(c(tan((0.5-pv_chisq)*pi),
                 tan((0.5-pv_lr)*pi), tan((0.5-Pvalue_logrank)*pi)))
@@ -480,8 +482,9 @@ konp_2_sample_impu_output<-function(time,delta,trt,n.perm,n.impu = 1)
   
   return(list(pv_chisq=pv_chisq, pv_lr=pv_lr, pv_cauchy=pv_cauchy,
               chisq_test_stat=chisq_test_stat, lr_test_stat=lr_test_stat,
+              cauchy_test_stat = cau,
               tab_usage = tab_usage, tab_usage_perm = tab_usage_perm,
-              imputed_altern_delta_mat=imputed_altern_delta_mat,
+              imputed_altern_status_mat=imputed_altern_status_mat,
               imputed_altern_time_mat=imputed_altern_time_mat,
-              ptrt_mat=ptrt_mat))
+              p_group_mat=p_group_mat))
 }

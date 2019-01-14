@@ -2,46 +2,47 @@
 % Please edit documentation in R/HHGKM_K_sample.R
 \name{konp_test}
 \alias{konp_test}
-\title{KONP Tests for Equality of K Distributions for Right-Censored Data}
+\title{KONP tests are K-sample Omnibus Non-Proportional hazards tests for right-censored data.}
 \usage{
-konp_test(time, delta, trt, n.perm, n.impu = 1)
+konp_test(time, status, group, n_perm, n_impu = 1)
 }
 \arguments{
-\item{time}{The follow-up time.}
+\item{time}{A vector of the observed follow-up times.}
 
-\item{delta}{A binary status vector, where 0 stands for censored observation and 1 for events.}
+\item{status}{A vector of event indicators, 0=right censored, 1= event at \code{time}.}
 
-\item{trt}{Group vector, must contain at least two unique values.}
+\item{group}{A vector denoting the group labels, must contain at least two different values.}
 
-\item{n.perm}{The number of permutations.}
+\item{n_perm}{The number of permutations.}
 
-\item{n.impu}{The number of imputations, for each imputation n.perm permutations will be executed.}
+\item{n_impu}{The number of imputations, for each imputation n_perm permutations will be executed.}
 }
 \value{
-Two test statistics and their respective P-values are returned: \cr 
+Three test statistics and their respective P-values are returned: \cr 
 
-\code{pv_chisq} - returns the P-value based on the Chi-square statistic. \cr 
-\code{pv_lr} - returns the P-value based on the likelihood ratio statistic. \cr 
-\code{pv_cauchy} - returns the P-value based on the Cauchy statistic. \cr 
-\code{chisq_test_stat} - returns the Chi-square test statistic. \cr 
-\code{lr_test_stat} - returns the likelihood ratio test statistic.
+\code{pv_chisq} - returns the P-value based on the KONP test chi-square statistic. \cr 
+\code{pv_lr} - returns the P-value based on the KONP test likelihood ratio statistic. \cr 
+\code{pv_cauchy} - returns the p-value based on the KONP-based Cauchy-combination test statistic. \cr 
+\code{chisq_test_stat} - returns the KONP test chi-squared test statistic. \cr 
+\code{lr_test_stat} - returns the KONP test likelihood-ratio test statistic. \cr
+\code{cauchy_test_stat} - - returns the KONP-based Cauchy-combination test statistic.
 }
 \description{
-KONP Tests for Equality of K Distributions for Right-Censored Data
+KONP tests are K-sample Omnibus Non-Proportional hazards tests for right-censored data.
 }
 \details{
-The KONP test is a powerful non-parametric K-sample survival test, for equality of K distributions.
- It is consistent against any form of difference between the two groups,
- and has been shown to offer more power than alternative tests, in non-proportional hazards data.
+The KONP tests are powerful non-parametric tests for comparing K (>=2) hazard functions based on right-censored data.
+These tests are consistent against any differences between the hazard functions of the groups.
+The KONP tests are often more powerful than other existing tests, especially under non-proportional hazard functions.
 }
 \examples{
 ## Generate some data to preform the test
 set.seed(1)
 n <- 50
 time <- rexp(n)
-delta <- sample(c(0,1),n,TRUE)
-trt <- c(rep(1,25),rep(2,25))
+status <- sample(c(0,1),n,TRUE)
+group <- c(rep(1,25),rep(2,25))
 
-konp_test(time,delta,trt,n.perm=10^3)
+konp_test(time,status,group,n_perm=10^3)
 
 }

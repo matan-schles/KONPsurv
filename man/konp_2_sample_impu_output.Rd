@@ -4,27 +4,28 @@
 \alias{konp_2_sample_impu_output}
 \title{KONP Test for Equality of Two Distributions for Right Censored Data}
 \usage{
-konp_2_sample_impu_output(time, delta, trt, n.perm, n.impu = 1)
+konp_2_sample_impu_output(time, status, group, n_perm, n_impu = 1)
 }
 \arguments{
-\item{time}{The follow up time.}
+\item{time}{A vector of the observed follow-up times.}
 
-\item{delta}{A binary status vector, where 0 stands for censored observations and 1 stands for events.}
+\item{status}{A vector of event indicators, 0=right censored, 1= event at \code{time}.}
 
-\item{trt}{Group vector, must contain only two unique values.}
+\item{group}{A vector denoting the group labels, must contain at least two different values.}
 
-\item{n.perm}{The number of permutations.}
+\item{n_perm}{The number of permutations.}
 
-\item{n.impu}{The number of imputations, for each imputation n.perm permutations will be executed.}
+\item{n_impu}{The number of imputations, for each imputation n_perm permutations will be executed.}
 }
 \value{
-Two statistics and their appropriate P-values are returned: \cr 
+Three test statistics and their respective P-values are returned: \cr 
 
-\code{pv_chisq} - returns the P-value based on the Chi-square statistic. \cr 
-\code{pv_lr} - returns the P-value based on the likelihood ratio statistic. \cr 
-\code{pv_cauchy} - returns the P-value based on the Cauchy statistic. \cr 
-\code{chisq_test_stat} - returns the Chi-square test statistic. \cr 
-\code{lr_test_stat} - returns the likelihood ratio test statistic.
+\code{pv_chisq} - returns the P-value based on the KONP test chi-square statistic. \cr 
+\code{pv_lr} - returns the P-value based on the KONP test likelihood ratio statistic. \cr 
+\code{pv_cauchy} - returns the p-value based on the KONP-based Cauchy-combination test statistic. \cr 
+\code{chisq_test_stat} - returns the KONP test chi-squared test statistic. \cr 
+\code{lr_test_stat} - returns the KONP test likelihood-ratio test statistic. \cr
+\code{cauchy_test_stat} - - returns the KONP-based Cauchy-combination test statistic.
 }
 \description{
 KONP Test for Equality of Two Distributions for Right Censored Data

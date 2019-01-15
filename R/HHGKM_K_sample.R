@@ -28,14 +28,14 @@ sample_group_K_sample <- function(group,imputed_status_matrix)
 #' @param n_perm The number of permutations.
 #' @param n_impu The number of imputations, for each imputation n_perm permutations will be executed.
 #' 
-#' @return Three test statistics and their respective P-values are returned: \cr 
+#' @return Three test statistics and their respective p-values are returned: \cr 
 #' 
-#' \code{pv_chisq} - returns the P-value based on the KONP test chi-square statistic. \cr 
-#' \code{pv_lr} - returns the P-value based on the KONP test likelihood ratio statistic. \cr 
+#' \code{pv_chisq} - returns the p-value based on the KONP test chi-square statistic. \cr 
+#' \code{pv_lr} - returns the p-value based on the KONP test likelihood ratio statistic. \cr 
 #' \code{pv_cauchy} - returns the p-value based on the KONP-based Cauchy-combination test statistic. \cr 
 #' \code{chisq_test_stat} - returns the KONP test chi-squared test statistic. \cr 
 #' \code{lr_test_stat} - returns the KONP test likelihood-ratio test statistic. \cr
-#' \code{cauchy_test_stat} - - returns the KONP-based Cauchy-combination test statistic.
+#' \code{cauchy_test_stat} - returns the KONP-based Cauchy-combination test statistic.
 #' @examples
 #' ## Generate some data to preform the test
 #' set.seed(1)

@@ -15,7 +15,7 @@ The KONP tests are often more powerful than other existing tests, especially und
   The package contains one function:
 
   
-  \code{\link{konp_test}}: the permutation test for equality of K distributions with right-censored data.
+  \code{\link{konp_test}}: non-parametric tests for equality of K distributions using right-censored data.
 
 }
 \author{

@@ -1,6 +1,6 @@
 Package: KONPsurv
 Type: Package
-Title: KONP Tests for Equality of K Samples based on Right-Censored Data
+Title: KONP Tests: Powerful K-Sample Tests for Right-Censored Data
 Version: 1.0
 Date: 2018-06-30
 Author: Matan Schlesinger [cre, aut],

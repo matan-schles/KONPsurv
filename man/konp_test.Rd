@@ -2,7 +2,7 @@
 % Please edit documentation in R/HHGKM_K_sample.R
 \name{konp_test}
 \alias{konp_test}
-\title{KONP tests are K-sample Omnibus Non-Proportional hazards tests for right-censored data.}
+\title{KONP tests are \eqn{K}-sample Omnibus Non-Proportional hazards tests for right-censored data.}
 \usage{
 konp_test(time, status, group, n_perm, n_impu = 1)
 }
@@ -28,10 +28,10 @@ Three test statistics and their respective p-values are returned: \cr
 \code{cauchy_test_stat} - returns the KONP-based Cauchy-combination test statistic.
 }
 \description{
-KONP tests are K-sample Omnibus Non-Proportional hazards tests for right-censored data.
+KONP tests are \eqn{K}-sample Omnibus Non-Proportional hazards tests for right-censored data.
 }
 \details{
-The KONP tests are powerful non-parametric tests for comparing K (>=2) hazard functions based on right-censored data.
+The KONP tests are powerful non-parametric tests for comparing \eqn{K} (>=2) hazard functions based on right-censored data.
 These tests are consistent against any differences between the hazard functions of the groups.
 The KONP tests are often more powerful than other existing tests, especially under non-proportional hazard functions.
 }

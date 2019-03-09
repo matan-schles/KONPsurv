@@ -20,7 +20,7 @@ sample_group_K_sample <- function(group,imputed_status_matrix)
   return(p_group)
 }
 
-#' KONP tests are K-sample Omnibus Non-Proportional hazards tests for right-censored data.
+#' KONP tests are \eqn{K}-sample Omnibus Non-Proportional hazards tests for right-censored data.
 #' 
 #' @param time A vector of the observed follow-up times.
 #' @param status A vector of event indicators, 0=right censored, 1= event at \code{time}.
@@ -46,7 +46,7 @@ sample_group_K_sample <- function(group,imputed_status_matrix)
 #' 
 #' konp_test(time,status,group,n_perm=10^3)
 #' 
-#' @details The KONP tests are powerful non-parametric tests for comparing K (>=2) hazard functions based on right-censored data.
+#' @details The KONP tests are powerful non-parametric tests for comparing \eqn{K} (>=2) hazard functions based on right-censored data.
 #'These tests are consistent against any differences between the hazard functions of the groups.
 #'The KONP tests are often more powerful than other existing tests, especially under non-proportional hazard functions.
 #'  

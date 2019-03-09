@@ -6,16 +6,16 @@
  KONP Tests for Testing the Equality of K Distributions for Right-Censored Data
 }
 \description{
-An implementation of the K-sample omnibus non-proportional hazrds (KONP) tests.
+An implementation of the \eqn{K}-sample omnibus non-proportional hazrds (KONP) tests.
 
-The KONP tests are powerful non-parametric tests for comparing K (>=2) hazard functions based on right-censored data. These tests are consistent against any differences between the hazard functions of the groups.
+The KONP tests are powerful non-parametric tests for comparing \eqn{K} (>=2) hazard functions based on right-censored data. These tests are consistent against any differences between the hazard functions of the groups.
 The KONP tests are often more powerful than other existing tests, especially under non-proportional hazard functions.
 }
 \details{
   The package contains one function:
 
   
-  \code{\link{konp_test}}: non-parametric tests for equality of K distributions using right-censored data.
+  \code{\link{konp_test}}: non-parametric tests for equality of \eqn{K} distributions using right-censored data.
 
 }
 \author{
@@ -25,7 +25,10 @@ Author: Malka Gorfine \email{gorfinem@tauex.tau.ac.il}
 
 }
 \references{
-This will contain a a reference to the article when it will be published
+Gorfine, M., Schlesinger, M., & Hsu, L. (2019). \eqn{K}-sample omnibus non-proportional hazards tests based on right-censored data. arXiv preprint arXiv:1901.05739.
+\url{https://arxiv.org/pdf/1901.05739v1.pdf}
+
+
 }
 \keyword{ package }
 

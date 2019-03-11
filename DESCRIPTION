@@ -2,11 +2,11 @@ Package: KONPsurv
 Type: Package
 Title: KONP Tests: Powerful K-Sample Tests for Right-Censored Data
 Version: 1.0
-Date: 2018-06-30
+Date: 2019-03-11
 Author: Matan Schlesinger [cre, aut],
         Malka Gorfine [aut]
 Maintainer: Matan Schlesinger <matan.schles@gmail.com>
-Description: The KONP tests are powerful non-parametric tests for comparing K (>=2) hazard functions based on right-censored data. These tests are consistent against any differences between the hazard functions of the groups. The KONP tests are often more powerful than other existing tests, especially under non-proportional hazard functions.
+Description: The KONP tests are powerful non-parametric tests for comparing K (>=2) hazard functions based on right-censored data. These tests are consistent against any differences between the hazard functions of the groups. The KONP tests are often more powerful than other existing tests, especially under non-proportional hazard functions .
 Authors@R: c(
             person("Matan", "Schlesinger", email = "matan.schles@gmail.com", role = c("cre","aut")),
             person("Malka", "Gorfine", email = "gorfinem@tauex.tau.ac.il", role = "aut"))

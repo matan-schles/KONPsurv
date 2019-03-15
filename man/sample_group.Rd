@@ -20,5 +20,5 @@ A permuted vector of group such that there are at least two events in each group
 Create permutation for group vector
 }
 \details{
-This is an inner function inside KONPSURV package, not for the users.
+This is an inner function inside KONPsurv package, not for the users.
 }

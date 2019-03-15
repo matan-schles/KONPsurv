@@ -18,5 +18,5 @@ The location of the largest time that is smaller or equal of the pattern
 Binary search to find the location of the largest time that is smaller or equal of the pattern
 }
 \details{
-This is an inner function inside SG package, not for the users.
+This is an inner function inside KONPsurv package, not for the users.
 }

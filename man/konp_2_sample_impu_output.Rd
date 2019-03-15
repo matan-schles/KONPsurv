@@ -31,5 +31,5 @@ Three test statistics and their respective p-values are returned: \cr
 KONP Test for Equality of Two Distributions for Right Censored Data
 }
 \details{
-This is inner funtion inside KONP package made only for running simulation and not for users
+This is inner funtion inside KONPsurv package, it is made only for running simulation and not for users
 }

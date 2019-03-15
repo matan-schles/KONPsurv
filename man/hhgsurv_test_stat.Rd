@@ -30,5 +30,5 @@ A list with the two test stats and table usage
 A function to return the test statistic of the SG test
 }
 \details{
-This is an inner function inside SG package, not for the users.
+This is an inner function inside KONPsurv package, not for the users.
 }

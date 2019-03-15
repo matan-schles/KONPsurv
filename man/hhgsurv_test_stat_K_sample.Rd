@@ -31,5 +31,5 @@ A list with the two test statistic
 A function to return the test statistic of the KONP K-sample test
 }
 \details{
-This is an inner function inside SG package, not for the users.
+This is an inner function inside KONPsurv package, not for the users.
 }

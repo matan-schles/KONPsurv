@@ -21,5 +21,5 @@ The function returns two vectors inside a list \cr
 An implementation of Kaplan Meier calculation in C++
 }
 \details{
-This is an inner function inside SG package, not for the users.
+This is an inner function inside KONPsurv package, not for the users.
 }

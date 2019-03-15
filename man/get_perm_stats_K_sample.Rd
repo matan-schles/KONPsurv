@@ -25,5 +25,5 @@ A list with the two permutations test stats vectors
 A function to calculate the permutation test statistics for the KONP K-sample test
 }
 \details{
-This is an inner function inside SG package, not for the users.
+This is an inner function inside KONPsurv package, not for the users.
 }

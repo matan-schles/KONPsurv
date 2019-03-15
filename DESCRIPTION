@@ -2,7 +2,7 @@ Package: KONPsurv
 Type: Package
 Title: KONP Tests: Powerful K-Sample Tests for Right-Censored Data
 Version: 1.0
-Date: 2019-03-11
+Date: 2019-03-16
 Author: Matan Schlesinger [cre, aut],
         Malka Gorfine [aut]
 Maintainer: Matan Schlesinger <matan.schles@gmail.com>

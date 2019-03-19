@@ -1,10 +1,10 @@
-#' Create permutation for group vector with K values
-#' 
-#' @param group A binary vector indicating group, contains values from 1 to K
-#' @param imputed_status_matrix A matrix contianing the status each obsevations will recieve for each group it belongs.
-#' @return A permuted vector of group such that there are at least two events in each group .
-#' 
-#' @details This is an inner function inside KONPSURV package, not for the users.
+# Create permutation for group vector with K values
+# 
+# @param group A binary vector indicating group, contains values from 1 to K
+# @param imputed_status_matrix A matrix contianing the status each obsevations will recieve for each group it belongs.
+# @return A permuted vector of group such that there are at least two events in each group .
+# 
+# @details This is an inner function inside KONPSURV package, not for the users.
 sample_group_K_sample <- function(group,imputed_status_matrix)
 {
   p_group <- sample(group)

@@ -4,13 +4,13 @@ using namespace Rcpp;
 
 
 
-//' Binary search to find the location of the largest time that is smaller of the pattern
-//' 
-//' @param array A vector of sorted numbers to search the pattern in
-//' @param pattern A number to be searched in the array
-//' @return The location of the largest time that is smaller of the pattern
-//' 
-//' @details This is an inner function inside SG package, not for the users.
+// Binary search to find the location of the largest time that is smaller of the pattern
+// 
+// @param array A vector of sorted numbers to search the pattern in
+// @param pattern A number to be searched in the array
+// @return The location of the largest time that is smaller of the pattern
+// 
+// @details This is an inner function inside SG package, not for the users.
 // [[Rcpp::export]]
 int binary_search_km_ge (NumericVector array,  double pattern) { //ge stands for greater
   //this function goal is to return the location of the largest time that is smaller of the pattern
@@ -37,13 +37,13 @@ int binary_search_km_ge (NumericVector array,  double pattern) { //ge stands for
   }
 }
 
-//' Binary search to find the location of the largest time that is smaller or equal of the pattern
-//' 
-//' @param array A vector of sorted numbers to search the pattern in
-//' @param pattern A number to be searched in the array
-//' @return The location of the largest time that is smaller or equal of the pattern
-//' 
-//' @details This is an inner function inside SG package, not for the users.
+// Binary search to find the location of the largest time that is smaller or equal of the pattern
+// 
+// @param array A vector of sorted numbers to search the pattern in
+// @param pattern A number to be searched in the array
+// @return The location of the largest time that is smaller or equal of the pattern
+// 
+// @details This is an inner function inside SG package, not for the users.
 // [[Rcpp::export]]
 int binary_search_km_g (NumericVector array,  double pattern) { //g stands for greater 
   //this function goal is to return tthe location of the largest time that is smaller or equal to the pattern
@@ -72,19 +72,19 @@ int binary_search_km_g (NumericVector array,  double pattern) { //g stands for g
 
 
 
-//' A function to return the test statistic of the SG test
-//' 
-//' @param s0 A vector of the survival KM estimates in group 0 for all sorted unique times in group 0
-//' @param s1 A vector of the survival KM estimates in group 1 for all sorted unique times in group 1
-//' @param time0 all sorted unique times in group 0
-//' @param time1 all sorted unique times in group 1
-//' @param time The follow up time for all the data
-//' @param delta A binary status vector, where 0 stands for censored observations and 1 stands for events (corresponds with time)
-//' @param trt Group vector, must contain 0 and 1 values only (corresponds with time)
-//' @param tau The maximum time in which we can estimate the Kaplan Meier in the two groups
-//' @return A list with the two test stats and table usage
-//' 
-//' @details This is an inner function inside SG package, not for the users.
+// A function to return the test statistic of the SG test
+// 
+// @param s0 A vector of the survival KM estimates in group 0 for all sorted unique times in group 0
+// @param s1 A vector of the survival KM estimates in group 1 for all sorted unique times in group 1
+// @param time0 all sorted unique times in group 0
+// @param time1 all sorted unique times in group 1
+// @param time The follow up time for all the data
+// @param delta A binary status vector, where 0 stands for censored observations and 1 stands for events (corresponds with time)
+// @param trt Group vector, must contain 0 and 1 values only (corresponds with time)
+// @param tau The maximum time in which we can estimate the Kaplan Meier in the two groups
+// @return A list with the two test stats and table usage
+// 
+// @details This is an inner function inside SG package, not for the users.
 // [[Rcpp::export]]
 List hhgsurv_test_stat(NumericVector s0,NumericVector s1, NumericVector time0, NumericVector time1,
                         NumericVector time,IntegerVector delta,IntegerVector trt,double tau){
@@ -231,16 +231,16 @@ List hhgsurv_test_stat(NumericVector s0,NumericVector s1, NumericVector time0, N
 
 
 
-//' An implementation of Kaplan Meier calculation in C++
-//' 
-//' @param time The follow up time 
-//' @param delta A binary status vector, where 0 stands for censored observations and 1 stands for events (corresponds with time)
-//' @return The function returns two vectors inside a list \cr
-//' 
-//' \code{time} - returns the sorted unique time of the data \cr 
-//' \code{s} - returns the corresponding KM survival estimates to time
-//' 
-//' @details This is an inner function inside SG package, not for the users.
+// An implementation of Kaplan Meier calculation in C++
+// 
+// @param time The follow up time 
+// @param delta A binary status vector, where 0 stands for censored observations and 1 stands for events (corresponds with time)
+// @return The function returns two vectors inside a list \cr
+// 
+// \code{time} - returns the sorted unique time of the data \cr 
+// \code{s} - returns the corresponding KM survival estimates to time
+// 
+// @details This is an inner function inside SG package, not for the users.
 // [[Rcpp::export]]
 List KM_C(NumericVector time,IntegerVector delta){
   //Note that time should have no ties, ties should be solved in r before
@@ -272,18 +272,18 @@ List KM_C(NumericVector time,IntegerVector delta){
 
 
 
-//' A function to calculate the permutation test statistics
-//' 
-//' @param trt The original data Group vector, must contain 0 and 1 values only
-//' @param ptrt_mat The permuted treatment matrix for all permutations
-//' @param time_original The original data follow up time 
-//' @param delta_orginial The original data binary status vector, where 0 stands for censored observations and 1 stands for events 
-//' @param imputed_altern_time_vec The time vector for observations that switched groups in permuted sample
-//' @param imputed_altern_delta_vec The delta vector for observations that switched groups in permuted sample
-//' @param n_perm The number of permutations
-//' @return A list with the two permutations test stats vectors and a permutation table usage vector 
-//' 
-//' @details This is an inner function inside SG package, not for the users.
+// A function to calculate the permutation test statistics
+// 
+// @param trt The original data Group vector, must contain 0 and 1 values only
+// @param ptrt_mat The permuted treatment matrix for all permutations
+// @param time_original The original data follow up time 
+// @param delta_orginial The original data binary status vector, where 0 stands for censored observations and 1 stands for events 
+// @param imputed_altern_time_vec The time vector for observations that switched groups in permuted sample
+// @param imputed_altern_delta_vec The delta vector for observations that switched groups in permuted sample
+// @param n_perm The number of permutations
+// @return A list with the two permutations test stats vectors and a permutation table usage vector 
+// 
+// @details This is an inner function inside SG package, not for the users.
 // [[Rcpp::export]]
 List get_perm_stats(IntegerVector trt,IntegerMatrix ptrt_mat,NumericVector time_original,
                     IntegerVector delta_orginial,NumericVector imputed_altern_time_vec,
@@ -372,19 +372,19 @@ List get_perm_stats(IntegerVector trt,IntegerMatrix ptrt_mat,NumericVector time_
 
 
 
-//' A function to return the test statistic of the KONP K-sample test
-//' 
-//' @param s_group A list with the survival KM estimates for all sorted unique times in each group, each group is an element in the list
-//' @param time_group  A list with all sorted unique in each group, each group is an element in the list
-//' @param n_vec A vector with the sample sizes in each group
-//' @param time The follow up time for all the data
-//' @param delta A binary status vector, where 0 stands for censored observations and 1 stands for events (corresponds with time)
-//' @param trt Group vector, contains the values 1,..,K only, which correspond with time
-//' @param tau_k A vector contains maximum times in which we can estimate the Kaplan Meier in each group
-//' @param tau The maximum time in which we can estimate the Kaplan Meier in at least two groups
-//' @return A list with the two test statistic
-//' 
-//' @details This is an inner function inside SG package, not for the users.
+// A function to return the test statistic of the KONP K-sample test
+// 
+// @param s_group A list with the survival KM estimates for all sorted unique times in each group, each group is an element in the list
+// @param time_group  A list with all sorted unique in each group, each group is an element in the list
+// @param n_vec A vector with the sample sizes in each group
+// @param time The follow up time for all the data
+// @param delta A binary status vector, where 0 stands for censored observations and 1 stands for events (corresponds with time)
+// @param trt Group vector, contains the values 1,..,K only, which correspond with time
+// @param tau_k A vector contains maximum times in which we can estimate the Kaplan Meier in each group
+// @param tau The maximum time in which we can estimate the Kaplan Meier in at least two groups
+// @return A list with the two test statistic
+// 
+// @details This is an inner function inside SG package, not for the users.
 // [[Rcpp::export]]
 List hhgsurv_test_stat_K_sample(List s_group,List time_group, IntegerVector n_vec,
                        NumericVector time,IntegerVector delta,IntegerVector trt,NumericVector tau_k, double tau){
@@ -528,16 +528,16 @@ List hhgsurv_test_stat_K_sample(List s_group,List time_group, IntegerVector n_ve
 
 
 
-//' A function to calculate the permutation test statistics for the KONP K-sample test
-//' 
-//' @param ptrt_mat The permuted treatment matrix for all permutations
-//' @param imputed_time_matrix A matrix contianing the time each obsevations will recieve for each group it belongs
-//' @param imputed_delta_matrix A matrix contianing the delta each obsevations will recieve for each group it belongs
-//' @param n_perm The number of permutations
-//' @param n_vec A vector with the sample sizes in each group
-//' @return A list with the two permutations test stats vectors 
-//' 
-//' @details This is an inner function inside SG package, not for the users.
+// A function to calculate the permutation test statistics for the KONP K-sample test
+// 
+// @param ptrt_mat The permuted treatment matrix for all permutations
+// @param imputed_time_matrix A matrix contianing the time each obsevations will recieve for each group it belongs
+// @param imputed_delta_matrix A matrix contianing the delta each obsevations will recieve for each group it belongs
+// @param n_perm The number of permutations
+// @param n_vec A vector with the sample sizes in each group
+// @return A list with the two permutations test stats vectors 
+// 
+// @details This is an inner function inside SG package, not for the users.
 // [[Rcpp::export]]
 List get_perm_stats_K_sample(IntegerMatrix ptrt_mat,NumericMatrix imputed_time_matrix,
                              IntegerMatrix imputed_delta_matrix,int n_perm, IntegerVector n_vec){

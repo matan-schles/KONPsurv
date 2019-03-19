@@ -13,7 +13,7 @@ Authors@R: c(
 License: GPL (>= 2)
 Imports: survival,Rcpp (>= 0.12.16)
 LinkingTo: Rcpp
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Suggests: testthat
 NeedsCompilation: yes
 Packaged: 2018-09-22 16:39:20 UTC; Matan

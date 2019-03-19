@@ -1,11 +1,11 @@
-#' Create permutation for group vector
-#' 
-#' @param group A binary vector indicating group.
-#' @param status_orginal A binary status vector for the original data, 0 for censored observations and 1 for events.
-#' @param imputed_altern_status_vec A binary imputed status vector for observations that will change group in the permuted data.
-#' @return A permuted vector of group such that there are at least two events in each group .
-#' 
-#' @details This is an inner function inside KONPSURV package, not for the users.
+# Create permutation for group vector
+# 
+# @param group A binary vector indicating group.
+# @param status_orginal A binary status vector for the original data, 0 for censored observations and 1 for events.
+# @param imputed_altern_status_vec A binary imputed status vector for observations that will change group in the permuted data.
+# @return A permuted vector of group such that there are at least two events in each group .
+# 
+# @details This is an inner function inside KONPSURV package, not for the users.
 sample_group <- function(group,status_orginal,imputed_altern_status_vec)
 {
   p_group <- sample(group)
@@ -19,26 +19,26 @@ sample_group <- function(group,status_orginal,imputed_altern_status_vec)
 }
 
 
-#' KONP Test for Equality of Two Distributions for Right Censored Data
-#' 
-#' @param time A vector of the observed follow-up times.
-#' @param status A vector of event indicators, 0=right censored, 1= event at \code{time}.
-#' @param group A vector denoting the group labels, must contain at least two different values.
-#' @param n_perm The number of permutations.
-#' @param n_impu The number of imputations, for each imputation n_perm permutations will be executed.
-#' 
-#' @return Three test statistics and their respective p-values are returned: \cr 
-#' 
-#' \code{pv_chisq} - returns the p-value based on the KONP test chi-square statistic. \cr 
-#' \code{pv_lr} - returns the p-value based on the KONP test likelihood ratio statistic. \cr 
-#' \code{pv_cauchy} - returns the p-value based on the KONP-based Cauchy-combination test statistic. \cr 
-#' \code{chisq_test_stat} - returns the KONP test chi-squared test statistic. \cr 
-#' \code{lr_test_stat} - returns the KONP test likelihood-ratio test statistic. \cr
-#' \code{cauchy_test_stat} - returns the KONP-based Cauchy-combination test statistic.
+# KONP Test for Equality of Two Distributions for Right Censored Data
+# 
+# @param time A vector of the observed follow-up times.
+# @param status A vector of event indicators, 0=right censored, 1= event at \code{time}.
+# @param group A vector denoting the group labels, must contain at least two different values.
+# @param n_perm The number of permutations.
+# @param n_impu The number of imputations, for each imputation n_perm permutations will be executed.
+# 
+# @return Three test statistics and their respective p-values are returned: \cr 
+# 
+# \code{pv_chisq} - returns the p-value based on the KONP test chi-square statistic. \cr 
+# \code{pv_lr} - returns the p-value based on the KONP test likelihood ratio statistic. \cr 
+# \code{pv_cauchy} - returns the p-value based on the KONP-based Cauchy-combination test statistic. \cr 
+# \code{chisq_test_stat} - returns the KONP test chi-squared test statistic. \cr 
+# \code{lr_test_stat} - returns the KONP test likelihood-ratio test statistic. \cr
+# \code{cauchy_test_stat} - returns the KONP-based Cauchy-combination test statistic.
 
-#' @details This is an inner function inside KONPSURV package, not for the users.
-#' The user should run the K-sample test and if K=2 this function will run.
-#'  
+# @details This is an inner function inside KONPSURV package, not for the users.
+# The user should run the K-sample test and if K=2 this function will run.
+#  
 konp_2_sample<-function(time,status,group,n_perm,n_impu = 1)
 {
   
@@ -251,23 +251,23 @@ konp_2_sample<-function(time,status,group,n_perm,n_impu = 1)
 
 # konp 2 sample with imputation output ------------------------------------
 
-#' KONP Test for Equality of Two Distributions for Right Censored Data
-#' 
-#' @param time A vector of the observed follow-up times.
-#' @param status A vector of event indicators, 0=right censored, 1= event at \code{time}.
-#' @param group A vector denoting the group labels, must contain at least two different values.
-#' @param n_perm The number of permutations.
-#' @param n_impu The number of imputations, for each imputation n_perm permutations will be executed.
-#' 
-#' @return Three test statistics and their respective p-values are returned: \cr 
-#' 
-#' \code{pv_chisq} - returns the p-value based on the KONP test chi-square statistic. \cr 
-#' \code{pv_lr} - returns the p-value based on the KONP test likelihood ratio statistic. \cr 
-#' \code{pv_cauchy} - returns the p-value based on the KONP-based Cauchy-combination test statistic. \cr 
-#' \code{chisq_test_stat} - returns the KONP test chi-squared test statistic. \cr 
-#' \code{lr_test_stat} - returns the KONP test likelihood-ratio test statistic. \cr
-#' \code{cauchy_test_stat} - returns the KONP-based Cauchy-combination test statistic.
-#' @details This is inner funtion inside KONP package made only for running simulation and not for users
+# KONP Test for Equality of Two Distributions for Right Censored Data
+# 
+# @param time A vector of the observed follow-up times.
+# @param status A vector of event indicators, 0=right censored, 1= event at \code{time}.
+# @param group A vector denoting the group labels, must contain at least two different values.
+# @param n_perm The number of permutations.
+# @param n_impu The number of imputations, for each imputation n_perm permutations will be executed.
+# 
+# @return Three test statistics and their respective p-values are returned: \cr 
+# 
+# \code{pv_chisq} - returns the p-value based on the KONP test chi-square statistic. \cr 
+# \code{pv_lr} - returns the p-value based on the KONP test likelihood ratio statistic. \cr 
+# \code{pv_cauchy} - returns the p-value based on the KONP-based Cauchy-combination test statistic. \cr 
+# \code{chisq_test_stat} - returns the KONP test chi-squared test statistic. \cr 
+# \code{lr_test_stat} - returns the KONP test likelihood-ratio test statistic. \cr
+# \code{cauchy_test_stat} - returns the KONP-based Cauchy-combination test statistic.
+# @details This is inner funtion inside KONP package made only for running simulation and not for users
 konp_2_sample_impu_output<-function(time,status,group,n_perm,n_impu = 1)
 {
   

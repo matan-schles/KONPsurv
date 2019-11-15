@@ -14,6 +14,7 @@ License: GPL (>= 2)
 Imports: survival,Rcpp (>= 0.12.16)
 LinkingTo: Rcpp
 RoxygenNote: 6.1.1
+Encoding: UTF-8
 Suggests: testthat
 NeedsCompilation: yes
 Packaged: 2018-09-22 16:39:20 UTC; Matan

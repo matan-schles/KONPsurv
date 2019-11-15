@@ -37,14 +37,10 @@ sample_group_K_sample <- function(group,imputed_status_matrix)
 #' \code{lr_test_stat} - returns the KONP test likelihood-ratio test statistic. \cr
 #' \code{cauchy_test_stat} - returns the KONP-based Cauchy-combination test statistic.
 #' @examples
-#' ## Generate some data to preform the test
-#' set.seed(1)
-#' n <- 50
-#' time <- rexp(n)
-#' status <- sample(c(0,1),n,TRUE)
-#' group <- c(rep(1,25),rep(2,25))
+#' # gastric cancer data
+#' data(gastric)
 #' 
-#' konp_test(time,status,group,n_perm=10^3)
+#' konp_test(gastric$time, gastric$status, gastric$group, n_perm=10^3) 
 #' 
 #' @details The KONP tests are powerful non-parametric tests for comparing \eqn{K} (>=2) hazard functions based on right-censored data.
 #'These tests are consistent against any differences between the hazard functions of the groups.

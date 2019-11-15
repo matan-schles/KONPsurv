@@ -34,13 +34,9 @@ Gorfine, M., Schlesinger, M., & Hsu, L. (2019). \eqn{K}-sample omnibus non-propo
 
 \examples{
   \donttest{
-## Generate some data to preform the test
-set.seed(1)
-n <- 50
-time <- rexp(n)
-status <- sample(c(0,1),n,TRUE)
-group <- c(rep(0,25),rep(1,25))
+# gastric cancer data  
+data(gastric)
 
-konp_test(time,status,group,n_perm=10^3)  
+konp_test(gastric$time, gastric$status, gastric$group, n_perm=10^3)
   }
 }

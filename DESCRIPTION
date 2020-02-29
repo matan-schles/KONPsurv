@@ -13,7 +13,7 @@ Authors@R: c(
 License: GPL (>= 2)
 Imports: survival,Rcpp (>= 0.12.16)
 LinkingTo: Rcpp
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0
 Encoding: UTF-8
 Suggests: testthat
 NeedsCompilation: yes

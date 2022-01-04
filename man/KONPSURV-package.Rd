@@ -26,7 +26,7 @@ Author: Malka Gorfine \email{gorfinem@tauex.tau.ac.il}
 }
 \references{
 Gorfine, M., Schlesinger, M., & Hsu, L. (2020). \eqn{K}-sample omnibus non-proportional hazards tests based on right-censored data. Statistical Methods in Medical Research, 29(10), 2830–2850.
-\url{https://doi.org/10.1177/0962280220907355}
+\doi{10.1177/0962280220907355}
 
 
 }
